@@ -1,0 +1,64 @@
+* {
+	color: #94bfc5;
+}
+.bg-gradient {
+	background: #8effe4; /* Old browsers */
+	background: -moz-linear-gradient(top, #8effe4 0%, #defff7 50%, #ffffff 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #8effe4 0%,#defff7 50%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #8effe4 0%,#defff7 50%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8effe4', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+.mh-150 {
+	max-height: 150px;
+}
+.mh-250 {
+	max-height: 250px;
+}
+.mw-500 {
+	max-width: 500px;
+}
+.bg-blue {
+	background-color: #00BCD4;
+}
+.push-down {
+	position: relative;
+	top: 200px;
+	z-index: 2;
+}
+.push-down-more {
+	position: relative;
+	top: 300px;
+	z-index: 2;
+}
+.spacer {
+	height: 300px;
+}
+.spacer-small {
+	height: 100px;
+}
+.btn-white {
+	background-color: #FFF;
+	color: #00BCD4;
+	border-radius: 0;
+	border: none;
+}
+.btn-white:hover {
+	transform: scale(1.3);
+}
+@media (max-width: 500px) {
+	#displayChange img { /*BOOSTRAP V4 ALPHA IMG=FLUID ERROR FIX */
+		height: 100%;
+		width: 100%;
+	}
+}
+@media (max-width: 725px) {
+	.img-md { /*BOOSTRAP V4 ALPHA IMG=FLUID ERROR FIX */
+		height: 100%;
+		width: 100%;
+	}
+}
+@media (max-width: 600px) {
+	img {
+		max-width: 100%!important;
+	}
+}

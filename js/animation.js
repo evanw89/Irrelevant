@@ -5,6 +5,11 @@ $(document).ready(function(){
 	$(".animation").css("display","inline");
 	        runAnimationText();
 })
+var isFirefox = 
+                  navigator.userAgent.toLowerCase().indexOf('firefox') > -1; //Positioning in Firefox is BUGGY
+        if(isFirefox) {
+          $(".menu").css("left","5%");
+        };
 
 //ANIMATION NAVIGATION
       // $("#webAnim .gifChange").hover(function() {
@@ -42,37 +47,90 @@ $(document).ready(function(){
         $(".pageRight ul").hide();
         $("#animationPage2 .ex").addClass("block");
 
+        var isFirefox = 
+                  navigator.userAgent.toLowerCase().indexOf('firefox') > -1; //SVG Animation in Firefox is BUGGY
+        if(isFirefox) {
+          var spin_tl = new TimelineMax({})
 
-        var spin_tl = new TimelineMax({}),
-        progressSlider = document.getElementById("progressSlider");
+          spin_tl.addPause(0);
+          spin_tl.to("#bear", 0, {y: -200, x: 200, ease:Linear.easeNone}, 0)
+            .from("#planet", 1, {scale: 0, ease:Elastic.easeOut}, 0)
+            .to("#bear", 18, {x: -2000, y: 150, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            .to("#bear", 18, {rotation: 30, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            .from("#eyes circle", 0.2, {repeat: -1, scaleY: 0, repeatDelay: 4, ease:Power4.easeInOut}, 0)
+            .to("#hose", 18, {scaleY: 2, rotation: -25, transformOrigin: "0% 100%", repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 3)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 7)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 14)
+            .staggerFrom("#planetinterior path", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
+            .staggerFrom("#moon circle, #moon ellipse", 1, {scale: 0, ease:Elastic.easeOut}, 0.035, 0.5)
+            .staggerFrom("#stars circle", 1, {scale: 0, ease:Elastic.easeOut}, 0.025, 0.35)
+            .staggerFrom("#structures polygon, #structures path, #tweens", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
+            .staggerFromTo("#tweens circle", 1, {repeat: -1, opacity: 1, scale: 0.4}, {repeat: -1, opacity: 0, scale: 1, ease:Circ.easeOut}, 0.1, 0)
+     
+            var button_tl = new TimelineMax({paused: true});
 
-        spin_tl.addPause(0);
-        spin_tl.to("#fan", 0, {y: 45, x: 52, ease:Linear.easeNone}, 0)
-          .to("#fan_1", 0, {y: 72, x: 68, ease:Linear.easeNone}, 0)
-          .to("#fan_2", 0, {y: 100, x: 100, ease:Linear.easeNone}, 0)
-          .to("#bear", 0, {y: -200, x: 200, ease:Linear.easeNone}, 0)
-          .from("#planet", 1, {scale: 0, ease:Elastic.easeOut}, 0)
-          .to("#bear", 18, {x: -2000, y: 950, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
-          .to("#bear", 18, {rotation: 30, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
-          .from("#eyes circle", 0.2, {repeat: -1, scaleY: 0, repeatDelay: 4, ease:Power4.easeInOut}, 0)
-          .to("#hose", 18, {scaleY: 2, rotation: -25, transformOrigin: "0% 100%", repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
-          // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 3)
-          // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 7)
-          // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 14)
-          .staggerFrom("#planetinterior path", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
-          .staggerFrom("#moon circle, #moon ellipse", 1, {scale: 0, ease:Elastic.easeOut}, 0.035, 0.5)
-          .staggerFrom("#stars circle", 1, {scale: 0, ease:Elastic.easeOut}, 0.025, 0.35)
-          .staggerFrom("#structures polygon, #structures path, #tweens", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
-          .to("#structures", 22, {repeat: -1, rotation: 360, transformOrigin: "49% 60.5%", ease:Linear.easeNone}, 0)
-          .to("#fan", 1.5, {repeat: -1, rotation: 360, transformOrigin: "55% 45%", ease:Linear.easeNone}, 0)
-          .to("#fan_1", 1.75, {repeat: -1, rotation: 360, transformOrigin: "50% 53%", ease:Linear.easeNone}, 0)
-          .to("#fan_2", 2, {repeat: -1, rotation: 360, transformOrigin: "50% 53%", ease:Linear.easeNone}, 0)
-          .to("#planetinterior", 18, {repeat: -1, rotation: 360, transformOrigin: "65% 60%", ease:Linear.easeNone}, 0)
-          .staggerFromTo("#tweens circle", 1, {repeat: -1, opacity: 1, scale: 0.4}, {repeat: -1, opacity: 0, scale: 1, ease:Circ.easeOut}, 0.1, 0)
-   
-          $("#animationContent2 button").on("click", function() {
-            spin_tl.paused(!spin_tl.paused());
-          })
+            button_tl.to("#animationContent2 button", 0.5, {rotation: 90, ease:Elastic.easeInOut})
+              .to("#animationContent2 button", 0.3, {css:{borderTopLeftRadius: "50%", borderBottomLeftRadius: "50%"}})
+              .to("#animationContent2 button",0.8, {scaleX:0.6, scaleY:1.2, ease:Expo.easeIn})
+              .to("#animationContent2 button",0.1, {scaleX:0.7, scaleY:1.1, repeat:10, ease:Expo.easeIn})
+              .to("#animationContent2 button",0.2, {scaleX:1.4, scaleY:0.8, ease:Elastic.easeIn})
+              .to("#animationContent2 button",0.5, {y:-1200, ease:Elastic.easeInOut}, "-=0.075");
+
+            $("#animationContent2 button").on("click", function() {
+              button_tl.play();
+              spin_tl.paused(!spin_tl.paused());
+
+              setTimeout(function() {
+                button_tl.pause(0);
+              }, 4500)
+            })
+          }
+        else {
+          var spin_tl = new TimelineMax({})
+
+          spin_tl.addPause(0);
+          spin_tl.to("#fan", 0, {y: 45, x: 52, ease:Linear.easeNone}, 0)
+            .to("#fan_1", 0, {y: 72, x: 68, ease:Linear.easeNone}, 0)
+            .to("#fan_2", 0, {y: 100, x: 100, ease:Linear.easeNone}, 0)
+            .to("#bear", 0, {y: -200, x: 200, ease:Linear.easeNone}, 0)
+            .from("#planet", 1, {scale: 0, ease:Elastic.easeOut}, 0)
+            .to("#bear", 18, {x: -2000, y: 950, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            .to("#bear", 18, {rotation: 30, repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            .from("#eyes circle", 0.2, {repeat: -1, scaleY: 0, repeatDelay: 4, ease:Power4.easeInOut}, 0)
+            .to("#hose", 18, {scaleY: 2, rotation: -25, transformOrigin: "0% 100%", repeat: -1, yoyo: true, repeatDelay: 4, ease:Linear.easeNone}, 0)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 3)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 7)
+            // .to("#eyes circle", 0.5, {repeat: 1, yoyo: true, scaleY: 0, ease:Power4.easeInOut}, 14)
+            .staggerFrom("#planetinterior path", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
+            .staggerFrom("#moon circle, #moon ellipse", 1, {scale: 0, ease:Elastic.easeOut}, 0.035, 0.5)
+            .staggerFrom("#stars circle", 1, {scale: 0, ease:Elastic.easeOut}, 0.025, 0.35)
+            .staggerFrom("#structures polygon, #structures path, #tweens", 1, {scale: 0, ease:Elastic.easeOut}, 0.02, 0)
+            .to("#structures", 22, {repeat: -1, rotation: 360, transformOrigin: "49% 60.5%", ease:Linear.easeNone}, 0)
+            .to("#fan", 1.5, {repeat: -1, rotation: 360, transformOrigin: "55% 45%", ease:Linear.easeNone}, 0)
+            .to("#fan_1", 1.75, {repeat: -1, rotation: 360, transformOrigin: "50% 53%", ease:Linear.easeNone}, 0)
+            .to("#fan_2", 2, {repeat: -1, rotation: 360, transformOrigin: "50% 53%", ease:Linear.easeNone}, 0)
+            .to("#planetinterior", 18, {repeat: -1, rotation: 360, transformOrigin: "65% 60%", ease:Linear.easeNone}, 0)
+            .staggerFromTo("#tweens circle", 1, {repeat: -1, opacity: 1, scale: 0.4}, {repeat: -1, opacity: 0, scale: 1, ease:Circ.easeOut}, 0.1, 0)
+     
+            var button_tl = new TimelineMax({paused: true});
+
+            button_tl.to("#animationContent2 button", 0.5, {rotation: 90, ease:Elastic.easeInOut})
+              .to("#animationContent2 button", 0.3, {css:{borderTopLeftRadius: "50%", borderBottomLeftRadius: "50%"}})
+              .to("#animationContent2 button",0.8, {scaleX:0.6, scaleY:1.2, ease:Expo.easeIn})
+              .to("#animationContent2 button",0.1, {scaleX:0.7, scaleY:1.1, repeat:10, ease:Expo.easeIn})
+              .to("#animationContent2 button",0.2, {scaleX:1.4, scaleY:0.8, ease:Elastic.easeIn})
+              .to("#animationContent2 button",0.8, {y:-1200, ease:Elastic.easeInOut}, "-=0.075");
+
+            $("#animationContent2 button").on("click", function() {
+              button_tl.play();
+              spin_tl.paused(!spin_tl.paused());
+
+              setTimeout(function() {
+                button_tl.pause(0);
+              }, 5000)
+            })
+          }
 
         //CITYANIMATION
           
@@ -226,24 +284,69 @@ $("#animationContinue > #click").on("click", function(){
         $("#animationPage2").addClass("block animated fadeIn");
       });
 
+$("#scroll1").bind('mousewheel', function(e){
+  if(e.originalEvent.wheelDelta < 0) {
+    $(this).removeClass("animated fadeIn").addClass("animated bounceOutUp");
+    $("#animationPage2").addClass("block animated fadeIn");
+  }
+});
+$("#scroll1").on('mousewheel DOMMouseScroll', function(event){
+  if(event.originalEvent.detail > 0) { //FIREFOX
+    $(this).removeClass("animated fadeIn").addClass("animated bounceOutUp");
+    $("#animationPage2").addClass("block animated fadeIn");
+  }
+});
 
-var back = document.getElementsByClassName("btn-hamburger")[0];
+//ABOUT
+      $("#menuAbout").on("click", function(){
+        $("#aboutPage").removeClass("hidden").addClass("animated bounceInDown")
+      });
+      $("#aboutPage i.fa-times").on("click", function() {
+        $("#aboutPage").addClass("animated bounceOutUp").removeClass("bounceInDown");
+        setTimeout(function() {
+          $("#aboutPage").removeClass("animated bounceOutUp").addClass("hidden");
+        }, 1000);
+      });
+      $("#aboutPage i.fa-chevron-down").on("click", function() {
+        $("#aboutPage").addClass("animated bounceOutUp").removeClass("bounceInDown");
+        $("#aboutPage2").removeClass("hidden").addClass("animated bounceInUp")
+        setTimeout(function() {
+          $("#aboutPage").removeClass("animated bounceOutUp").addClass("hidden");
+        }, 1000);
+      });
+      $("#aboutPage2 i.fa-times").on("click", function() {
+        $("#aboutPage2").addClass("animated bounceOutDown").removeClass("bounceInIp");
+        setTimeout(function() {
+          $("#aboutPage2").removeClass("animated bounceOutDown").addClass("hidden");
+        }, 1000);
+      });
 
-      $('.back').hover(function(){
-          $("#home").addClass("animated fadeInLeft");
-        },
-        function() {
-          $("#home").removeClass("animated fadeInLeft");
-        });
-      back.addEventListener("click", function(){location.reload();});
-
-
-var back = document.getElementsByClassName("btn-hamburger")[0];
-
-      $('.back').hover(function(){
-          $("#home").addClass("animated fadeInLeft");
-        },
-        function() {
-          $("#home").removeClass("animated fadeInLeft");
-        });
-      back.addEventListener("click", function(){location.reload();});
+      //CONTACT FORM
+      function resizeInput() {
+        $(this).attr('size', $(this).val().length);
+      }
+      $('input[type="text"], input[type="email"]')
+          .keyup(resizeInput)
+          .each(resizeInput);
+      console.clear();
+      (function(){
+      var textareas = document.querySelectorAll('.expanding'),
+      resize = function(t) {
+        t.style.height = 'auto';
+        t.style.overflow = 'hidden'; // Ensure scrollbar doesn't interfere with the true height of the text.
+        t.style.height = (t.scrollHeight + t.offset ) + 'px';
+        t.style.overflow = '';
+      },
+      attachResize = function(t) {
+        if ( t ) {
+          console.log('t.className',t.className);
+          t.offset = !window.opera ? (t.offsetHeight - t.clientHeight) : (t.offsetHeight + parseInt(window.getComputedStyle(t, null).getPropertyValue('border-top-width')));
+          resize(t);
+          if ( t.addEventListener ) {
+            t.addEventListener('input', function() { resize(t); });
+            t.addEventListener('mouseup', function() { resize(t); }); // set height after user resize
+          }
+          t['attachEvent'] && t.attachEvent('onkeyup', function() { resize(t); });
+        }
+      };
+      })();

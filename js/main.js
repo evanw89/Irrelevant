@@ -10,64 +10,6 @@ var classes_to_remove = ["hair-look-left", "hair2-look-left", "head-look-left", 
 "avatarBG-look-up", "avatarBG-look-up-left", "avatarBG-look-up-right", "avatarBG-look-left", "avatarBG-look-right", "avatarBG-look-down", "avatarBG-look-down-left", "avatarBG-look-down-right"
 ];
 
-    var aText = new Array(
-              "var iSpeed = 15;",
-              "var iIndex = 0;",
-              "var iArrLength = aText[0].length;",
-              "var iScrollAt = 20;",
-              "var iTextPos = 0;", 
-              "var sContents = '';", 
-              "var iRow;",
-              " ",
-              "function typewriter1() { sContents =  ' ';",
-              "iRow = Math.max(0, iIndex-iScrollAt);",
-              " ",
-               "var destination = document.getElementById('typedText');",
-               " ",
-               "while ( iRow < iIndex ) {",
-               " sContents += aText[iRow++] + '<br />';",
-               "}",
-               "destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + '_';",
-               " ",
-               "if ( iTextPos++ == iArrLength ) {",
-               " iTextPos = 0; iIndex++;",
-               "if ( iIndex != aText.length ) {",
-               " iArrLength = aText[iIndex].length; setTimeout('typewriter1()', 500); }",
-               "}",
-              "else {",
-              " setTimeout('typewriter1()', iSpeed); }",
-               "};"
-              );
-              var iSpeed = 15; // time delay of print out
-              var iIndex = 0; // start printing array at this posision
-              var iArrLength = aText[0].length; // the length of the text array
-              var iScrollAt = 20; // start scrolling up at this many lines
-               
-              var iTextPos = 0; // initialise text position
-              var sContents = ''; // initialise contents variable
-              var iRow; // initialise current row
-    function typewriter1()
-              {
-               sContents =  ' ';
-               iRow = Math.max(0, iIndex-iScrollAt);
-               var destination = document.getElementById("typedText");
-               
-               while ( iRow < iIndex ) {
-                sContents += aText[iRow++] + '<br />';
-               }
-               destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "_";
-               if ( iTextPos++ == iArrLength ) {
-                iTextPos = 0;
-                iIndex++;
-                if ( iIndex != aText.length ) {
-                 iArrLength = aText[iIndex].length;
-                 setTimeout("typewriter1()", 500);
-                }
-               } else {
-                setTimeout("typewriter1()", iSpeed);
-               }
-              }
-
 $(document).ready(function() {
       runSplash();
       removeClasses();
@@ -374,3 +316,8 @@ $(document).ready(function() {
       // click.addEventListener("click", function(){$(".contentintro").addClass("animated fadeOutUp");}, false);
 
       $(".resizable").resizable();
+
+
+
+
+      

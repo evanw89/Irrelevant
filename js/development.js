@@ -4,25 +4,72 @@ $(document).ready(function(){
 	$(".development").css("display","inline");
     runMobile();
 });
+var isFirefox = 
+                  navigator.userAgent.toLowerCase().indexOf('firefox') > -1; //Positioning in Firefox is BUGGY
+        if(isFirefox) {
+          $(".menu").css("left","5%");
+        };
+
+    var aText = new Array(
+              "var iSpeed = 15;",
+              "var iIndex = 0;",
+              "var iArrLength = aText[0].length;",
+              "var iScrollAt = 20;",
+              "var iTextPos = 0;", 
+              "var sContents = '';", 
+              "var iRow;",
+              " ",
+              "function typewriter1() { sContents =  ' ';",
+              "iRow = Math.max(0, iIndex-iScrollAt);",
+              " ",
+               "var destination = document.getElementById('typedText');",
+               " ",
+               "while ( iRow < iIndex ) {",
+               " sContents += aText[iRow++] + '<br />';",
+               "}",
+               "destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + '_';",
+               " ",
+               "if ( iTextPos++ == iArrLength ) {",
+               " iTextPos = 0; iIndex++;",
+               "if ( iIndex != aText.length ) {",
+               " iArrLength = aText[iIndex].length; setTimeout('typewriter1()', 500); }",
+               "}",
+              "else {",
+              " setTimeout('typewriter1()', iSpeed); }",
+               "};"
+              );
+              var iSpeed = 15; // time delay of print out
+              var iIndex = 0; // start printing array at this posision
+              var iArrLength = aText[0].length; // the length of the text array
+              var iScrollAt = 20; // start scrolling up at this many lines
+               
+              var iTextPos = 0; // initialise text position
+              var sContents = ''; // initialise contents variable
+              var iRow; // initialise current row
+    function typewriter1()
+              {
+               sContents =  ' ';
+               iRow = Math.max(0, iIndex-iScrollAt);
+               var destination = document.getElementById("typedText");
+               
+               while ( iRow < iIndex ) {
+                sContents += aText[iRow++] + '<br />';
+               }
+               destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "_";
+               if ( iTextPos++ == iArrLength ) {
+                iTextPos = 0;
+                iIndex++;
+                if ( iIndex != aText.length ) {
+                 iArrLength = aText[iIndex].length;
+                 setTimeout("typewriter1()", 500);
+                }
+               } else {
+                setTimeout("typewriter1()", iSpeed);
+               }
+              }
 
 
 var collage_tl = new TimelineMax({repeat:-1, yoyo:true, repeatDelay:0});
-
-      $("#developmentContinue > #click").on("click", function(){
-        $(".contentintro").removeClass("animated fadeIn");
-        $(".contentintro").addClass("animated bounceOutDown");
-        $("#developmentPage2").addClass("block animated fadeIn");
-
-        setTimeout("typewriter1()", 1000);
-
-//COLLAGE
-        setTimeout(function() {
-          TweenMax.staggerFrom("#collage path", 1, {scale:0, opacity:0, transformOrigin: "0% 100%", ease:Elastic.easeOut}, 0.15)
-          collage_tl.staggerTo("#collage path", 1.25, {y:-50, x:50, ease:Power2.easeInOut}, 0.1)
-          .staggerTo("#collage path", 1.25, {rotation:5, ease:Power2.easeInOut}, 0.1, 0.5)
-          , 1500});
-
-     });
 
       $("#menuitem1").on("click", function() {
         collage_tl.pause();
@@ -181,9 +228,16 @@ var collage_tl = new TimelineMax({repeat:-1, yoyo:true, repeatDelay:0});
         $("#plumage path:nth-child(2)").css("fill", "#F4C5F9");
         $("#plumage path:nth-child(3)").css("fill", "#775C96");
       });
-      var knight_tl = new TimelineMax({repeat: -1, repeatDelay: 3});
+      var isFirefox = 
+                  navigator.userAgent.toLowerCase().indexOf('firefox') > -1; //SVG Animation in Firefox is BUGGY
+      if(isFirefox) {
+        var knight_tl = new TimelineMax({repeat: -1, repeatDelay: 3});
+        knight_tl.add(TweenMax.fromTo("#mustachio path", 0.075, {scaley:1, scalex:1}, {scaleY:1.4, scaleX:0.5, y:-250, x:150, yoyo: true, repeat: 1, ease:Power0.easeInOut}));
+      }
+      else {
+        var knight_tl = new TimelineMax({repeat: -1, repeatDelay: 3});
         knight_tl.add(TweenMax.fromTo("#mustachio path", 0.075, {scaley:1, scalex:1}, {scaleY:1.4, scaleX:0.5, y:-35, transformOrigin: "50% 50%", yoyo: true, repeat: 1, ease:Power0.easeInOut}));
-
+      }
       $("#knight #colors g g").hover(function() {
         TweenMax.to(this, 0.1, {x:-10, y:-10, scale:1.2})
         $(this).children("path:nth-child(1)").css("fill", "#FFF");
@@ -221,13 +275,87 @@ var collage_tl = new TimelineMax({repeat:-1, yoyo:true, repeatDelay:0});
       tmax_t3.staggerFromTo(mobile_shapes, mobile_duration, mobile_staggerFrom, mobile_staggerTo, mobile_stagger, 0);
     };
 
+//SCROLL NAVIGATION
+$("#scroll1").bind('mousewheel', function(e){
+  if(e.originalEvent.wheelDelta < 0) {
+    $(this).removeClass("animated fadeIn").addClass("animated bounceOutUp");
+    $("#developmentPage2").addClass("block animated fadeIn");
 
-var back = document.getElementsByClassName("btn-hamburger")[0];
+    setTimeout(typewriter1(), 1000);
 
-      $('.back').hover(function(){
-          $("#home").addClass("animated fadeInLeft");
-        },
-        function() {
-          $("#home").removeClass("animated fadeInLeft");
-        });
-      back.addEventListener("click", function(){location.reload();});
+//COLLAGE
+    setTimeout(function() {
+      TweenMax.staggerFrom("#collage path", 1, {scale:0, opacity:0, transformOrigin: "0% 100%", ease:Elastic.easeOut}, 0.15)
+        collage_tl.staggerTo("#collage path", 1.25, {y:-50, x:50, ease:Power2.easeInOut}, 0.1)
+        .staggerTo("#collage path", 1.25, {rotation:5, ease:Power2.easeInOut}, 0.1, 0.5)
+        , 1500});
+     }
+});
+$("#scroll1").on('mousewheel DOMMouseScroll', function(event){
+  if(event.originalEvent.detail > 0) { //FIREFOX
+    $(this).removeClass("animated fadeIn").addClass("animated bounceOutUp");
+    $("#developmentPage2").addClass("block animated fadeIn");
+
+    setTimeout(typewriter1(), 1000);
+//COLLAGE
+    setTimeout(function() {
+      TweenMax.staggerFrom("#collage path", 1, {scale:0, opacity:0, transformOrigin: "0% 100%", ease:Elastic.easeOut}, 0.15)
+        collage_tl.staggerTo("#collage path", 1.25, {y:-50, x:50, ease:Power2.easeInOut}, 0.1)
+        .staggerTo("#collage path", 1.25, {rotation:5, ease:Power2.easeInOut}, 0.1, 0.5)
+        , 1500});
+     }
+});
+
+//ABOUT
+      $("#menuAbout").on("click", function(){
+        $("#aboutPage").removeClass("hidden").addClass("animated bounceInDown")
+      });
+      $("#aboutPage i.fa-times").on("click", function() {
+        $("#aboutPage").addClass("animated bounceOutUp").removeClass("bounceInDown");
+        setTimeout(function() {
+          $("#aboutPage").removeClass("animated bounceOutUp").addClass("hidden");
+        }, 1000);
+      });
+      $("#aboutPage i.fa-chevron-down").on("click", function() {
+        $("#aboutPage").addClass("animated bounceOutUp").removeClass("bounceInDown");
+        $("#aboutPage2").removeClass("hidden").addClass("animated bounceInUp")
+        setTimeout(function() {
+          $("#aboutPage").removeClass("animated bounceOutUp").addClass("hidden");
+        }, 1000);
+      });
+      $("#aboutPage2 i.fa-times").on("click", function() {
+        $("#aboutPage2").addClass("animated bounceOutDown").removeClass("bounceInIp");
+        setTimeout(function() {
+          $("#aboutPage2").removeClass("animated bounceOutDown").addClass("hidden");
+        }, 1000);
+      });
+
+      //CONTACT FORM
+      function resizeInput() {
+        $(this).attr('size', $(this).val().length);
+      }
+      $('input[type="text"], input[type="email"]')
+          .keyup(resizeInput)
+          .each(resizeInput);
+      console.clear();
+      (function(){
+      var textareas = document.querySelectorAll('.expanding'),
+      resize = function(t) {
+        t.style.height = 'auto';
+        t.style.overflow = 'hidden'; // Ensure scrollbar doesn't interfere with the true height of the text.
+        t.style.height = (t.scrollHeight + t.offset ) + 'px';
+        t.style.overflow = '';
+      },
+      attachResize = function(t) {
+        if ( t ) {
+          console.log('t.className',t.className);
+          t.offset = !window.opera ? (t.offsetHeight - t.clientHeight) : (t.offsetHeight + parseInt(window.getComputedStyle(t, null).getPropertyValue('border-top-width')));
+          resize(t);
+          if ( t.addEventListener ) {
+            t.addEventListener('input', function() { resize(t); });
+            t.addEventListener('mouseup', function() { resize(t); }); // set height after user resize
+          }
+          t['attachEvent'] && t.attachEvent('onkeyup', function() { resize(t); });
+        }
+      };
+      })();
